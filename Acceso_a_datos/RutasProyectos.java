@@ -16,12 +16,6 @@ public class RutasProyectos {
         System.out.println(ruta);
         System.out.println(subruta1);
         System.out.println(subruta2);
-        
-        try{
-
-        }catch (Exception e){
-            System.err.println("Error: " + e.getMessage());
-        }
     }
 
 
