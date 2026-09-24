@@ -17,6 +17,4 @@ public class RutasProyectos {
         System.out.println(subruta1);
         System.out.println(subruta2);
     }
-
-
 }

@@ -13,25 +13,21 @@ public class Preparar_carpetas{
             if(Files.notExists(ruta)){
                 Files.createDirectories(ruta);
             }else{
-                System.out.println("El arhivo datos existe");
-                System.out.println("Pesa "+Files.size(ruta));
+                System.out.println("Pesa "+Files.size(ruta));//hay que refaroctizar todo esto y hacer que funcione a base de un metodo y hacer un codigo mas limpio
             }
             if(Files.notExists(copias)){
                 Files.createDirectories(copias);
             }else{
-                System.out.println("El arhivo copias existe");
                 System.out.println("Pesa "+Files.size(copias));
             }
             if(Files.notExists(clubes)){
                 Files.createFile(clubes);
             }else{
-                System.out.println("El arhivo clubes existe");
                 System.out.println("Pesa "+Files.size(clubes));
             }
             if(Files.notExists(respaldo)){
                 Files.createFile(respaldo);
             }else{
-                System.out.println("El arhivo respaldo existe");
                 System.out.println("Pesa "+Files.size(respaldo));
             }
         }catch (IOException e) {
