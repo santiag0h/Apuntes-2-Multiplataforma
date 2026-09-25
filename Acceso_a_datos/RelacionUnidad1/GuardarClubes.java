@@ -1,4 +1,4 @@
-package Acceso_a_datos.RelacionUnidad1;
+package RelacionUnidad1;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
