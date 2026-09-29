@@ -1,4 +1,4 @@
-package RelacionUnidad1;
+package Relacion1Unidad1;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
