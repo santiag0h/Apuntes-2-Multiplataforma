@@ -13,22 +13,35 @@ public class RegistrosClubes {
     public static void main(String[] args) {
         Path ruta = Path.of("datos","clubes.txt");// tengo que comprobar la carpeta mas tarde
         if (Files.exists(ruta)) {
+            int id =0;
             Scanner escaner = new Scanner(System.in);// crear el escaner
-            System.out.println("Escribe una id:");
-            int id = Integer.parseInt(escaner.nextLine());
-            System.out.println("Escribe una equipo:");
-            String equipo = escaner.nextLine();
-            System.out.println("Escribe una ciudad:");
-            String ciudad = escaner.nextLine();
+            while(id!=-1){
+                System.out.println("Escribe una id:");
+                id = Integer.parseInt(escaner.nextLine());
+                if(id!=-1){
+                    System.out.println("Escribe una equipo:");
+                    String equipo = escaner.nextLine();
+                    System.out.println("Escribe una ciudad:");
+                    String ciudad = escaner.nextLine();
 
-            try (BufferedWriter salida = Files.newBufferedWriter(ruta, StandardCharsets.UTF_8,
-                    StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-                salida.write(id + ";" + equipo + ";" + ciudad + ";");// escribir el txt
-                salida.newLine();
-            } catch (IOException e) {
-                System.err.println("No se pudo leer la carpeta:" + e.getMessage());
+                    try (BufferedWriter salida = Files.newBufferedWriter(ruta, StandardCharsets.UTF_8,//Aqui esta el writer
+                            StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+                        salida.write(id + ";" + equipo + ";" + ciudad + ";");// escribir en el txt
+                        salida.newLine();
+                    } catch (IOException e) {
+                        System.err.println("No se pudo escribir en el archivo:" + e.getMessage());
+                    }
+                }
             }
-            escaner.close();
+            try(BufferedReader entrada=Files.newBufferedReader(ruta, StandardCharsets.UTF_8)){//Aqui esta el reader
+                String lineas;
+                while ((lineas=entrada.readLine())!=null){//vemos si las lineas si esta en blanco paramos de leer
+                    System.out.println(lineas);
+                }
+            }catch(IOException e){
+                System.err.println("No se pudo leer el archivo");
+            }
+            escaner.close();//cerramos el escaner
         }
     }
 }
