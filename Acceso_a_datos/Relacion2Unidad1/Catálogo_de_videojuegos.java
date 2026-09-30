@@ -25,7 +25,7 @@ public class Catálogo_de_videojuegos {
                         return;
                     }
                     for (String parte:hola){//mostramos esto ya con un nuevo formato
-                        if(contador==0){
+                        if(contador==0){//cambiar esta parte por una que use la posiciones del vector para mostrarlo
                             Integer.parseInt(parte);
                             System.out.print("["+parte+"]");
                             contador+=1;
@@ -39,7 +39,7 @@ public class Catálogo_de_videojuegos {
                     }
                 }
         }catch(IOException e){
-            System.err.println("No se pudo modificar:"+e.getMessage());
+            System.err.println("No se pudo modificar:"+e.getMessage());//debo de añadir aqui otro tipo de error no lo de convertir la id a numero
         }
     }
 }
