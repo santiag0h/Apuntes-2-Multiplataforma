@@ -18,9 +18,9 @@ public class Utiles {
 
     public static int escanerNumero() {
         Scanner escaner = new Scanner(System.in);
-        if(escaner.isNumber()){
+        // if(escaner.isNumber()){
 
-        }
+        // }
         System.out.println("Escribe un numero:");
         int numero = Integer.parseInt(escaner.nextLine());
         escaner.close();
