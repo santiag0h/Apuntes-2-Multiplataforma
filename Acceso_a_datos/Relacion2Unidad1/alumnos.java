@@ -7,13 +7,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class alumnos {
-    //     Crea un programa que busque un alumno concreto dentro de alumnos.csv a partir de un ID introducido
-    // por teclado.
-    // Lee todas las líneas del fichero en UTF-8.
-    // Recorre solo los registros de datos y compara el ID solicitado con el primer campo.
-    // Si lo encuentras, muestra nombre y grupo; si no existe, muestra un mensaje específico.
-    // El programa debe distinguir entre un ID introducido que no sea numérico y un ID numérico que
-    // simplemente no exista.
     public static void main(String[] args) {
         Path ruta=Path.of("Acceso_a_datos","Relacion2Unidad1","alumnos.csv");
         try{
