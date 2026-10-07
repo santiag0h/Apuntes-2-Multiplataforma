@@ -11,7 +11,7 @@ public class alumnos {
         Path ruta=Path.of("Acceso_a_datos","Relacion2Unidad1","alumnos.csv");
         try{
             List <String> archivo =Files.readAllLines(ruta,StandardCharsets.UTF_8);
-            int Id = Utiles.escanerNumero();
+            int Id = Utiles.escanerNumero(true);
             boolean comprobar=false;
             for(int i =1; i<archivo.size();i+=1){//iniciamos en 1 para evitar la primera linea
                     String linea = archivo.get(i);      
@@ -29,6 +29,4 @@ public class alumnos {
             System.err.println("Ha ocurrido un fallo en el archivo "+e);
         }
     }
-
-    
 }
