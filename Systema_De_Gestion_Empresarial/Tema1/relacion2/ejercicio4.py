@@ -1,0 +1,5 @@
+producto=input("Introduce el nombre del producto:")
+existencia_inicial=int(input("Introduce las existencias iniciales:"))
+unidades_recibidas=int(input("Introduce las unidades recibidas:"))
+unidades_vendidas=int(input("Introduce las unidades vendidas:"))
+print(f"Con {existencia_inicial} iniciales, {unidades_recibidas} recibidas y {unidades_vendidas} vendidas, quedan {existencia_inicial+unidades_recibidas-unidades_vendidas}.")
