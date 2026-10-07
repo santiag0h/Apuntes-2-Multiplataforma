@@ -5,13 +5,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Scanner;
 
 public class alumnos {
     public static void main(String[] args) {
         Path ruta=Path.of("Acceso_a_datos","Relacion2Unidad1","alumnos.csv");
         try{
             List <String> archivo =Files.readAllLines(ruta,StandardCharsets.UTF_8);
-            int Id = Utiles.escanerNumero(true);
+            Scanner escaner =new Scanner(System.in);
+            int Id = Utiles.escanerNumero(escaner);
             boolean comprobar=false;
             for(int i =1; i<archivo.size();i+=1){//iniciamos en 1 para evitar la primera linea
                     String linea = archivo.get(i);      
@@ -25,6 +27,7 @@ public class alumnos {
             if(comprobar==false){
                         System.out.println("El id introducido no existe");
                     }
+            escaner.close();
         }catch(IOException e){
             System.err.println("Ha ocurrido un fallo en el archivo "+e);
         }

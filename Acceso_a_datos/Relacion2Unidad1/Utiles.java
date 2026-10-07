@@ -8,25 +8,18 @@ import java.util.Scanner;
 
 public class Utiles {
 
-    public static String escanerTexto(boolean ultimo) {//llamarlo asi String miTexto = Utiles.escanerTexto();lo mismo con la de abajo
-        Scanner escaner =new Scanner(System.in);
+    public static String escanerTexto(Scanner escaner) {//llamarlo asi String miTexto = Utiles.escanerTexto();lo mismo con la de abajo
         System.out.println("Escribe un texto:");
         String texto=escaner.nextLine();
-        if(ultimo==true){
-            escaner.close();
-        }
         return texto;
     }
 
-    public static int escanerNumero(boolean ultimo){//si salta error puede ser por que ultimo sea true antes de tiempo
-        Scanner escaner = new Scanner(System.in);
-        System.out.println("Escribe un numero:");
+    public static int escanerNumero(Scanner escaner){//si salta error puede ser por que ultimo sea true antes de tiempo
+        
+       
         while(true){//aunque sea raro sirve para que la unica forma de salir sea con un return y asi java no de error
             try {
                 int numero = Integer.parseInt(escaner.nextLine());
-                if(ultimo==true){
-                    escaner.close();
-                }
                 return numero; 
             } catch (NumberFormatException e) {
                 System.out.println("Debes de poner un numero.");

@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class inventario {
     public static void main(String[] args) {
@@ -13,11 +14,16 @@ public class inventario {
         if (!Files.exists(ruta)) {
             System.out.println("No existe el archivo: " + ruta);
             return;
+        }else if(!Files.isRegularFile(ruta)){
+            System.out.println("el tipo de archivo no es correcto: " + ruta);
+            return;
         }
+
         try{
             List<String> archivo=Files.readAllLines(ruta,StandardCharsets.UTF_8);
-            int id=Utiles.escanerNumero(false);
-            int stock=Utiles.escanerNumero(true);
+            Scanner escaner =new Scanner(System.in);
+            int id=Utiles.escanerNumero(escaner);
+            int stock=Utiles.escanerNumero(escaner);
             List<String> nuevas =new ArrayList<>();
             nuevas.add("id;nombre;stock");
             boolean existe=false;
@@ -40,6 +46,7 @@ public class inventario {
                 }
                 
             }
+            escaner.close();
             if(existe==false&&esValido==true){
                     System.out.println("El id introducido no existe");
                 }
@@ -49,5 +56,6 @@ public class inventario {
         }catch(NumberFormatException e){
              System.err.println("Un tipo de dato es incorrecto");
         }
+        
     }
 }
