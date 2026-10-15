@@ -9,4 +9,3 @@ elif(telefono>(web and tienda)):
     print("telefono ha generado mas dinero")
 elif(tienda==web or tienda==telefono):
     print("ha ocurrido un empate")
-
