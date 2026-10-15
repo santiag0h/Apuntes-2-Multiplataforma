@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Utiles {
 
     public static String escanerTexto(Scanner escaner) {//llamarlo asi String miTexto = Utiles.escanerTexto();lo mismo con la de abajo
-        System.out.println("Escribe un texto:");
         String texto=escaner.nextLine();
         return texto;
     }
