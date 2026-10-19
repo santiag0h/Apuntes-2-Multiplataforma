@@ -29,7 +29,7 @@ public class producto_errores {
             for (int i = 1; i < productos.size(); i += 1) {
                 String linea = productos.get(i);
                 String partes[] = linea.split(";", -1);
-                int id
+                int id=0;
                 try{
                     id = Integer.parseInt(partes[1]);
                 }catch(NumberFormatException e){
