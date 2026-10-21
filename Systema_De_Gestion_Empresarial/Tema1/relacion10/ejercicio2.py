@@ -12,7 +12,9 @@ class Producto:
             return "true"
         else:
             return "false"
-producto1=Producto("coches",100)
+
+
+producto1 = Producto("coches", 100)
 producto1.Reponer(200)
 producto1.Vender(500)
 

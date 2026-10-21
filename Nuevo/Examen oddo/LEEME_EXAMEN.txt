@@ -1,0 +1,8 @@
+PT1 ODOO - BICIALERTA
+
+1. Lee ENUNCIADO_PT1_ODOO.pdf.
+2. Utiliza odoo_importacion_bicialerta.csv para A1.
+3. Guarda los cuatro archivos solicitados en evidencias/.
+4. Haz commit y push antes de las 21:05 (hora Madrid).
+
+No modifiques la rama correccion.
