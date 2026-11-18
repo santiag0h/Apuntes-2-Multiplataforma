@@ -83,4 +83,11 @@ public class ClubDao {
                 filas.getString("ciudad"),
                 filas.getBigDecimal("presupuesto"));
     }
+    private Club ListarPorCiudad(ResultSet filas) throws SQLException {
+        return new Club(
+                filas.getInt("id"),
+                filas.getString("nombre"),
+                filas.getString("ciudad"),
+                filas.getBigDecimal("presupuesto"));
+    }
 }
