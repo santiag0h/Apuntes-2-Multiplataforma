@@ -8,3 +8,4 @@ class Coleccion(models.Model):
     generacion = fields.Integer(string="Generacion", required=True)
     fecha_de_lanzamiento= fields.Date(string="Fecha de lanzamiento", required=True)
     active=fields.Boolean(default=True)
+    figure_ids = fields.One2many("pokestore.figure","collection_id", string="Figuras")

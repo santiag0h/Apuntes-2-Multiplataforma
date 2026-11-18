@@ -14,4 +14,11 @@
         action="pokestore_figure_action"
         sequence="10"
     />
+    <menuitem
+        id="pokestore_menu_collection"
+        name="Colecciones"
+        parent="pokestore_menu_catalog"
+        action="pokestore_collection_action"
+        sequence="10"
+    />
 </odoo>

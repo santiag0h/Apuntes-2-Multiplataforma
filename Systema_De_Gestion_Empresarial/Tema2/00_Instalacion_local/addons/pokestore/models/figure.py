@@ -9,7 +9,7 @@ class PokeStoreFigure(models.Model):
     _order = "name"
     name = fields.Char(string="Nombre", required=True)
     pokemon = fields.Char(string="Pokémon", required=True)
-    collection = fields.Char(string="Colección")
+    collection_id = fields.Many2one("pokestore.collection", string="Coleccion")
     rarity = fields.Selection(
         [
             ("normal", "Normal"),
