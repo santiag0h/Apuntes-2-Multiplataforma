@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test 7 · Tema 2 · Planificación y problemas de concurrencia</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--txt:#1d2330;--sub:#5b6474;--line:#dfe3ea;--acc:#3b5bdb;--ok:#2b8a3e;--okbg:#e6f4ea;--ko:#c92a2a;--kobg:#fdecec;--code:#f1f3f5}
+@media (prefers-color-scheme:dark){:root{--bg:#15181e;--card:#1e222a;--txt:#e6e9ef;--sub:#9aa3b2;--line:#323844;--acc:#7c95f2;--ok:#69db7c;--okbg:#1f3326;--ko:#ff8787;--kobg:#3a2224;--code:#262b34}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 20px 64px}
+a{color:var(--acc)}
+h1{font-size:1.5rem;margin:0 0 4px}
+.sub{color:var(--sub);margin:0 0 24px}
+.barra{position:sticky;top:0;background:var(--bg);padding:10px 0;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);z-index:1}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.q h2{font-size:1rem;margin:0 0 12px;font-weight:600}
+.q h2 span{color:var(--sub);font-weight:500;margin-right:6px}
+pre{background:var(--code);border-radius:8px;padding:12px 14px;overflow-x:auto;font:13.5px/1.45 Consolas,"Cascadia Code",monospace;margin:0 0 12px}
+.op{display:block;width:100%;text-align:left;background:transparent;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;font:inherit;cursor:pointer}
+.op:hover:not(:disabled){border-color:var(--acc)}
+.op:disabled{cursor:default}
+.op.ok{border-color:var(--ok);background:var(--okbg)}
+.op.ko{border-color:var(--ko);background:var(--kobg)}
+.exp{display:none;margin-top:10px;padding:10px 12px;border-left:3px solid var(--acc);color:var(--txt);background:var(--code);border-radius:0 8px 8px 0}
+.exp b.ok{color:var(--ok)} .exp b.ko{color:var(--ko)}
+.fin{display:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center}
+.fin p{font-size:1.2rem;margin:0 0 12px}
+button.btn{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+ul.lista{list-style:none;padding:0}
+ul.lista li{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0}
+ul.lista a{display:block;padding:12px 16px;text-decoration:none;color:var(--txt)}
+ul.lista a:hover{color:var(--acc)}
+ul.lista small{color:var(--sub);float:right}
+</style>
+</head>
+<body>
+<main>
+<p><a href="index.html">← Todos los tests</a></p>
+<h1>Test 7 · Tema 2 · Planificación y problemas de concurrencia</h1>
+<p class="sub">PSP · 10 preguntas. Las preguntas y las opciones se mezclan cada vez que repites el test.</p>
+<div class="barra"><span>Aciertos: <b id="marcador"></b></span></div>
+<div id="preguntas"></div>
+<div class="fin" id="fin"><p id="nota"></p><button class="btn" id="repetir">Repetir test</button></div>
+</main>
+<script type="application/json" id="datos">[{"enunciado": "Dentro de un proceso, ¿de qué depende qué hilo se ejecuta?", "correcta": "Del algoritmo de planificación y del número de procesadores", "incorrectas": ["Del orden alfabético de los nombres", "Solo de la prioridad", "Del tamaño del método run()"], "explicacion": "El SO elige el proceso; dentro de él influyen el algoritmo y los procesadores."}, {"enunciado": "¿Qué tipo de planificador usa Java para los hilos?", "correcta": "Apropiativo: puede quitarle la CPU a un hilo para dársela a otro", "incorrectas": ["Cooperativo: cada hilo cede la CPU cuando quiere", "FIFO estricto", "No tiene planificador"], "explicacion": "Como es apropiativo, importa la prioridad de cada hilo."}, {"enunciado": "¿Entre qué valores va la prioridad de un hilo y cuál es la de por defecto?", "correcta": "De 1 a 10; por defecto 5", "incorrectas": ["De 0 a 10; por defecto 0", "De 1 a 5; por defecto 3", "De 1 a 100; por defecto 50"], "explicacion": "MIN_PRIORITY = 1 y MAX_PRIORITY = 10. Los hilos heredan la prioridad de quien los creó."}, {"enunciado": "Pones a un hilo prioridad 10 y a otro prioridad 1. ¿Qué está garantizado?", "correcta": "Nada: el SO no tiene por qué respetarla, es solo una pista para el planificador", "incorrectas": ["Que el de prioridad 10 termina siempre antes", "Que el de prioridad 1 no empieza hasta que acabe el otro", "Que el de prioridad 10 recibe 10 veces más CPU"], "explicacion": "En el ejemplo del tema, con varios núcleos, los dos avanzan casi a la par."}, {"enunciado": "¿Se puede cambiar en Java la prioridad de un proceso?", "correcta": "No, solo la de los hilos de un proceso", "incorrectas": ["Sí, con setPriority()", "Sí, con ProcessBuilder.priority()", "Solo en Linux"], "explicacion": "Java no permite cambiar la prioridad de los procesos."}, {"enunciado": "El resultado cambia según el orden en que los hilos acceden a la memoria. ¿Qué problema es?", "correcta": "Condición de carrera", "incorrectas": ["Interbloqueo", "Inanición", "Bloqueo activo"], "explicacion": "Es lo que pasa con el Sumador y el Restador sin sincronizar."}, {"enunciado": "Un hilo no se entera de los cambios que otro ha hecho en una variable (ejemplo de la balanza). ¿Qué problema es?", "correcta": "Inconsistencia de memoria", "incorrectas": ["Interbloqueo", "Inanición", "Espera activa"], "explicacion": "Cada hilo trabaja con un valor que el otro ya ha cambiado."}, {"enunciado": "A un hilo de baja prioridad se le niega continuamente el acceso a un recurso. ¿Qué problema es?", "correcta": "Inanición", "incorrectas": ["Interbloqueo", "Condición de carrera", "Bloqueo activo"], "explicacion": "Es difícil de detectar porque no ocurre siempre: depende del entorno."}, {"enunciado": "Dos personas se cruzan en un pasillo y se apartan una y otra vez hacia el mismo lado. ¿Qué problema representa?", "correcta": "Bloqueo activo", "incorrectas": ["Interbloqueo", "Inanición", "Inconsistencia de memoria"], "explicacion": "Los hilos no están parados, pero por cómo actúan no se dejan avanzar."}, {"enunciado": "¿Qué diferencia hay entre interbloqueo y bloqueo activo?", "correcta": "En el interbloqueo los hilos esperan para siempre un evento que solo puede provocar el otro; en el bloqueo activo no están bloqueados, pero no avanzan", "incorrectas": ["Ninguna", "El interbloqueo solo pasa con procesos y el bloqueo activo con hilos", "El bloqueo activo se debe a la prioridad"], "explicacion": "Interbloqueo: todos parados. Bloqueo activo: en movimiento, sin progresar."}]</script>
+<script>
+const datos = JSON.parse(document.getElementById('datos').textContent);
+const zona = document.getElementById('preguntas');
+const marcador = document.getElementById('marcador');
+const fin = document.getElementById('fin');
+let aciertos = 0, respondidas = 0;
+
+function mezclar(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function pintar() {
+    aciertos = 0; respondidas = 0;
+    zona.innerHTML = '';
+    fin.style.display = 'none';
+    actualizar();
+    mezclar(datos.slice()).forEach((p, n) => {
+        const caja = document.createElement('div');
+        caja.className = 'q';
+        const h = document.createElement('h2');
+        const num = document.createElement('span');
+        num.textContent = (n + 1) + '.';
+        h.append(num, document.createTextNode(p.enunciado));
+        caja.append(h);
+        if (p.codigo) {
+            const pre = document.createElement('pre');
+            pre.textContent = p.codigo;
+            caja.append(pre);
+        }
+        const exp = document.createElement('div');
+        exp.className = 'exp';
+        const opciones = mezclar([{t: p.correcta, ok: true}, ...p.incorrectas.map(t => ({t, ok: false}))]);
+        const botones = [];
+        opciones.forEach(o => {
+            const b = document.createElement('button');
+            b.className = 'op';
+            b.textContent = o.t;
+            b.onclick = () => {
+                botones.forEach(x => {
+                    x.disabled = true;
+                    if (x._ok) x.classList.add('ok');
+                });
+                if (!o.ok) b.classList.add('ko'); else aciertos++;
+                respondidas++;
+                const v = document.createElement('b');
+                v.className = o.ok ? 'ok' : 'ko';
+                v.textContent = o.ok ? '¡Correcto! ' : 'Incorrecto. ';
+                exp.append(v, document.createTextNode(p.explicacion));
+                exp.style.display = 'block';
+                actualizar();
+            };
+            b._ok = o.ok;
+            botones.push(b);
+            caja.append(b);
+        });
+        caja.append(exp);
+        zona.append(caja);
+    });
+}
+
+function actualizar() {
+    marcador.textContent = aciertos + ' / ' + respondidas + ' (de ' + datos.length + ')';
+    if (respondidas === datos.length) {
+        const nota = (aciertos * 10 / datos.length).toFixed(1).replace('.', ',');
+        document.getElementById('nota').textContent =
+            'Has acertado ' + aciertos + ' de ' + datos.length + ' · Nota: ' + nota;
+        fin.style.display = 'block';
+    }
+}
+
+document.getElementById('repetir').onclick = () => { pintar(); window.scrollTo(0, 0); };
+pintar();
+</script>
+</body>
+</html>

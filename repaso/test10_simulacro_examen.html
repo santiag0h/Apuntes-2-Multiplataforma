@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test 10 · Simulacro de examen (Temas 1 y 2)</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--txt:#1d2330;--sub:#5b6474;--line:#dfe3ea;--acc:#3b5bdb;--ok:#2b8a3e;--okbg:#e6f4ea;--ko:#c92a2a;--kobg:#fdecec;--code:#f1f3f5}
+@media (prefers-color-scheme:dark){:root{--bg:#15181e;--card:#1e222a;--txt:#e6e9ef;--sub:#9aa3b2;--line:#323844;--acc:#7c95f2;--ok:#69db7c;--okbg:#1f3326;--ko:#ff8787;--kobg:#3a2224;--code:#262b34}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 20px 64px}
+a{color:var(--acc)}
+h1{font-size:1.5rem;margin:0 0 4px}
+.sub{color:var(--sub);margin:0 0 24px}
+.barra{position:sticky;top:0;background:var(--bg);padding:10px 0;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);z-index:1}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.q h2{font-size:1rem;margin:0 0 12px;font-weight:600}
+.q h2 span{color:var(--sub);font-weight:500;margin-right:6px}
+pre{background:var(--code);border-radius:8px;padding:12px 14px;overflow-x:auto;font:13.5px/1.45 Consolas,"Cascadia Code",monospace;margin:0 0 12px}
+.op{display:block;width:100%;text-align:left;background:transparent;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;font:inherit;cursor:pointer}
+.op:hover:not(:disabled){border-color:var(--acc)}
+.op:disabled{cursor:default}
+.op.ok{border-color:var(--ok);background:var(--okbg)}
+.op.ko{border-color:var(--ko);background:var(--kobg)}
+.exp{display:none;margin-top:10px;padding:10px 12px;border-left:3px solid var(--acc);color:var(--txt);background:var(--code);border-radius:0 8px 8px 0}
+.exp b.ok{color:var(--ok)} .exp b.ko{color:var(--ko)}
+.fin{display:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center}
+.fin p{font-size:1.2rem;margin:0 0 12px}
+button.btn{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+ul.lista{list-style:none;padding:0}
+ul.lista li{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0}
+ul.lista a{display:block;padding:12px 16px;text-decoration:none;color:var(--txt)}
+ul.lista a:hover{color:var(--acc)}
+ul.lista small{color:var(--sub);float:right}
+</style>
+</head>
+<body>
+<main>
+<p><a href="index.html">← Todos los tests</a></p>
+<h1>Test 10 · Simulacro de examen (Temas 1 y 2)</h1>
+<p class="sub">PSP · 12 preguntas. Las preguntas y las opciones se mezclan cada vez que repites el test.</p>
+<div class="barra"><span>Aciertos: <b id="marcador"></b></span></div>
+<div id="preguntas"></div>
+<div class="fin" id="fin"><p id="nota"></p><button class="btn" id="repetir">Repetir test</button></div>
+</main>
+<script type="application/json" id="datos">[{"enunciado": "¿Qué ocurre al ejecutar este código?", "correcta": "Se ejecuta run() en el hilo principal: no se crea ningún hilo nuevo", "incorrectas": ["Se crea un hilo nuevo que escribe «Hola»", "Da error de compilación", "No escribe nada"], "explicacion": "Solo start() crea el hilo. Llamar a run() es una llamada normal a un método.", "codigo": "class Saludo extends Thread {\n    @Override\n    public void run() {\n        System.out.println(\"Hola\");\n    }\n}\n\npublic class Prueba {\n    public static void main(String[] args) {\n        Saludo s = new Saludo();\n        s.run();\n    }\n}"}, {"enunciado": "¿Qué se ve por pantalla?", "correcta": "Primero las 5 A y después las 5 B", "incorrectas": ["Las A y las B mezcladas", "Primero las 5 B y después las 5 A", "Solo las B"], "explicacion": "join() hace que el main espere a que el hilo termine antes de escribir las B.", "codigo": "class Letras extends Thread {\n    @Override\n    public void run() {\n        for (int i = 0; i < 5; i++) {\n            System.out.print(\"A\");\n        }\n    }\n}\n\npublic class Prueba {\n    public static void main(String[] args) throws InterruptedException {\n        Letras h = new Letras();\n        h.start();\n        h.join();\n        for (int i = 0; i < 5; i++) {\n            System.out.print(\"B\");\n        }\n    }\n}"}, {"enunciado": "Dos hilos ejecutan este run() a la vez sobre la misma variable static contador, que empieza en 0. Después de hacer join() a los dos, ¿qué se puede imprimir?", "correcta": "Un valor que puede ser menor que 2000 y cambiar de una ejecución a otra", "incorrectas": ["Siempre 2000", "Siempre 1000", "Siempre 0"], "explicacion": "contador++ no es atómica: hay condición de carrera y se pierden incrementos.", "codigo": "@Override\npublic void run() {\n    for (int i = 0; i < 1000; i++) {\n        contador++;\n    }\n}"}, {"enunciado": "Dos hilos llaman 1000 veces cada uno a este método. La variable static contador empieza en 0. Después de hacer join() a los dos, ¿qué se imprime?", "correcta": "Siempre 2000", "incorrectas": ["Un valor menor que 2000 que va cambiando", "Siempre 1000", "Da error porque el método es static"], "explicacion": "synchronized convierte el incremento en una sección crítica: no se pierde ninguno.", "codigo": "synchronized static void incrementar() {\n    contador++;\n}"}, {"enunciado": "Con un new Semaphore(1) compartido por dos hilos, el primero hace esto. ¿Qué le pasa al segundo hilo cuando llama a acquire()?", "correcta": "Se queda dormido esperando para siempre, porque nadie libera el semáforo", "incorrectas": ["Entra sin problemas", "Lanza una IOException", "Libera el semáforo automáticamente"], "explicacion": "Sin release() la sección crítica nunca queda libre.", "codigo": "sem.acquire();\ncontador++;\n// falta sem.release();"}, {"enunciado": "¿Qué transición NO existe en el diagrama de estados de un proceso?", "correcta": "Bloqueado → En ejecución", "incorrectas": ["En ejecución → Bloqueado", "Listo → En ejecución", "En ejecución → Listo"], "explicacion": "Un proceso bloqueado pasa primero a listo, y luego el planificador decide."}, {"enunciado": "En una llamada al sistema, ¿qué hace que se pase de modo usuario a modo kernel?", "correcta": "El trap, que pone el bit de modo a 0", "incorrectas": ["El return, que pone el bit de modo a 0", "El planificador a largo plazo", "Un cambio de contexto"], "explicacion": "trap: bit de modo = 0 (kernel). return: bit de modo = 1 (usuario)."}, {"enunciado": "Terminan un proceso y un hilo. ¿Qué diferencia hay?", "correcta": "El proceso libera sus recursos; el hilo no, porque los recursos son del proceso", "incorrectas": ["Los dos liberan recursos", "Ninguno libera recursos", "El hilo libera recursos y el proceso no"], "explicacion": "Los recursos pertenecen al proceso, no a sus hilos."}, {"enunciado": "Dos procesos necesitan intercambiar información. Según el Tema 1, ¿qué es lo más común?", "correcta": "Usar ficheros (o colas FIFO)", "incorrectas": ["Leer directamente la memoria del otro", "Usar una variable static", "Usar synchronized"], "explicacion": "Los procesos no comparten memoria; los hilos sí."}, {"enunciado": "Quieres que el main no imprima el resultado hasta que hayan terminado todos los hilos. ¿Qué usas?", "correcta": "join() sobre cada hilo", "incorrectas": ["sleep() con un tiempo grande", "setPriority(10) en el main", "isAlive() una sola vez"], "explicacion": "sleep() no garantiza nada; join() espera exactamente hasta que el hilo termina."}, {"enunciado": "¿Qué mecanismo NO evita la espera activa?", "correcta": "Variable cerrojo consultada en bucle", "incorrectas": ["Semáforo", "Monitor (synchronized)", "Mutex con hilos dormidos por el SO"], "explicacion": "Si el hilo consulta la variable una y otra vez, gasta CPU: eso es espera activa."}, {"enunciado": "Programación paralela con memoria compartida frente a programación distribuida: ¿qué las diferencia?", "correcta": "En la paralela los núcleos comparten memoria; en la distribuida cada ordenador tiene la suya y se comunican por mensajes", "incorrectas": ["Ninguna", "La distribuida comparte memoria y la paralela no", "La paralela usa MPI y la distribuida no"], "explicacion": "Distribuida: varios ordenadores en red, cada uno con su procesador y su SO."}]</script>
+<script>
+const datos = JSON.parse(document.getElementById('datos').textContent);
+const zona = document.getElementById('preguntas');
+const marcador = document.getElementById('marcador');
+const fin = document.getElementById('fin');
+let aciertos = 0, respondidas = 0;
+
+function mezclar(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function pintar() {
+    aciertos = 0; respondidas = 0;
+    zona.innerHTML = '';
+    fin.style.display = 'none';
+    actualizar();
+    mezclar(datos.slice()).forEach((p, n) => {
+        const caja = document.createElement('div');
+        caja.className = 'q';
+        const h = document.createElement('h2');
+        const num = document.createElement('span');
+        num.textContent = (n + 1) + '.';
+        h.append(num, document.createTextNode(p.enunciado));
+        caja.append(h);
+        if (p.codigo) {
+            const pre = document.createElement('pre');
+            pre.textContent = p.codigo;
+            caja.append(pre);
+        }
+        const exp = document.createElement('div');
+        exp.className = 'exp';
+        const opciones = mezclar([{t: p.correcta, ok: true}, ...p.incorrectas.map(t => ({t, ok: false}))]);
+        const botones = [];
+        opciones.forEach(o => {
+            const b = document.createElement('button');
+            b.className = 'op';
+            b.textContent = o.t;
+            b.onclick = () => {
+                botones.forEach(x => {
+                    x.disabled = true;
+                    if (x._ok) x.classList.add('ok');
+                });
+                if (!o.ok) b.classList.add('ko'); else aciertos++;
+                respondidas++;
+                const v = document.createElement('b');
+                v.className = o.ok ? 'ok' : 'ko';
+                v.textContent = o.ok ? '¡Correcto! ' : 'Incorrecto. ';
+                exp.append(v, document.createTextNode(p.explicacion));
+                exp.style.display = 'block';
+                actualizar();
+            };
+            b._ok = o.ok;
+            botones.push(b);
+            caja.append(b);
+        });
+        caja.append(exp);
+        zona.append(caja);
+    });
+}
+
+function actualizar() {
+    marcador.textContent = aciertos + ' / ' + respondidas + ' (de ' + datos.length + ')';
+    if (respondidas === datos.length) {
+        const nota = (aciertos * 10 / datos.length).toFixed(1).replace('.', ',');
+        document.getElementById('nota').textContent =
+            'Has acertado ' + aciertos + ' de ' + datos.length + ' · Nota: ' + nota;
+        fin.style.display = 'block';
+    }
+}
+
+document.getElementById('repetir').onclick = () => { pintar(); window.scrollTo(0, 0); };
+pintar();
+</script>
+</body>
+</html>

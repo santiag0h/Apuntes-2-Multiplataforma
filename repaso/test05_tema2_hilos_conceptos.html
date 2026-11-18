@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test 5 · Tema 2 · Hilos: conceptos</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--txt:#1d2330;--sub:#5b6474;--line:#dfe3ea;--acc:#3b5bdb;--ok:#2b8a3e;--okbg:#e6f4ea;--ko:#c92a2a;--kobg:#fdecec;--code:#f1f3f5}
+@media (prefers-color-scheme:dark){:root{--bg:#15181e;--card:#1e222a;--txt:#e6e9ef;--sub:#9aa3b2;--line:#323844;--acc:#7c95f2;--ok:#69db7c;--okbg:#1f3326;--ko:#ff8787;--kobg:#3a2224;--code:#262b34}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 20px 64px}
+a{color:var(--acc)}
+h1{font-size:1.5rem;margin:0 0 4px}
+.sub{color:var(--sub);margin:0 0 24px}
+.barra{position:sticky;top:0;background:var(--bg);padding:10px 0;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);z-index:1}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.q h2{font-size:1rem;margin:0 0 12px;font-weight:600}
+.q h2 span{color:var(--sub);font-weight:500;margin-right:6px}
+pre{background:var(--code);border-radius:8px;padding:12px 14px;overflow-x:auto;font:13.5px/1.45 Consolas,"Cascadia Code",monospace;margin:0 0 12px}
+.op{display:block;width:100%;text-align:left;background:transparent;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;font:inherit;cursor:pointer}
+.op:hover:not(:disabled){border-color:var(--acc)}
+.op:disabled{cursor:default}
+.op.ok{border-color:var(--ok);background:var(--okbg)}
+.op.ko{border-color:var(--ko);background:var(--kobg)}
+.exp{display:none;margin-top:10px;padding:10px 12px;border-left:3px solid var(--acc);color:var(--txt);background:var(--code);border-radius:0 8px 8px 0}
+.exp b.ok{color:var(--ok)} .exp b.ko{color:var(--ko)}
+.fin{display:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center}
+.fin p{font-size:1.2rem;margin:0 0 12px}
+button.btn{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+ul.lista{list-style:none;padding:0}
+ul.lista li{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0}
+ul.lista a{display:block;padding:12px 16px;text-decoration:none;color:var(--txt)}
+ul.lista a:hover{color:var(--acc)}
+ul.lista small{color:var(--sub);float:right}
+</style>
+</head>
+<body>
+<main>
+<p><a href="index.html">← Todos los tests</a></p>
+<h1>Test 5 · Tema 2 · Hilos: conceptos</h1>
+<p class="sub">PSP · 10 preguntas. Las preguntas y las opciones se mezclan cada vez que repites el test.</p>
+<div class="barra"><span>Aciertos: <b id="marcador"></b></span></div>
+<div id="preguntas"></div>
+<div class="fin" id="fin"><p id="nota"></p><button class="btn" id="repetir">Repetir test</button></div>
+</main>
+<script type="application/json" id="datos">[{"enunciado": "¿Qué es un hilo?", "correcta": "La unidad básica que puede gestionar la CPU: una secuencia de código que se está ejecutando", "incorrectas": ["Un proceso con su propio espacio de memoria", "Un archivo ejecutable", "Un tipo de interrupción"], "explicacion": "Un hilo (thread o hebra) siempre vive dentro de un proceso."}, {"enunciado": "¿Qué diferencia principal hay entre un hilo y un proceso?", "correcta": "Los hilos viven dentro de un proceso y comparten su memoria; cada proceso tiene memoria propia", "incorrectas": ["Cada hilo tiene su propio espacio de memoria y los procesos no", "Un hilo puede existir sin proceso", "No hay diferencia"], "explicacion": "Por compartir memoria, comunicar hilos es sencillo; dos procesos necesitan un mecanismo de comunicación."}, {"enunciado": "¿Por qué es sencillo comunicar hilos?", "correcta": "Porque comparten la memoria del proceso y pueden acceder a cualquiera de sus datos", "incorrectas": ["Porque usan paso de mensajes", "Porque cada uno tiene su propia pila", "Porque se ejecutan siempre en orden"], "explicacion": "No necesitan ningún mecanismo extra para comunicarse."}, {"enunciado": "¿Cuántos hilos tiene como mínimo un proceso?", "correcta": "Uno, el hilo principal", "incorrectas": ["Ninguno", "Dos", "Tantos como núcleos tenga la CPU"], "explicacion": "Todo proceso tiene al menos un hilo: el principal."}, {"enunciado": "¿Qué tiene cada hilo de forma PROPIA?", "correcta": "Su contador de programa, sus registros de CPU y su pila", "incorrectas": ["El código y los datos", "Los recursos del proceso", "La memoria del proceso"], "explicacion": "Comparten código, datos y recursos; lo propio es lo que hace falta para saber por dónde va cada uno."}, {"enunciado": "El navegador sigue respondiendo mientras una pestaña carga una página pesada. ¿Qué ventaja de los hilos es esa?", "correcta": "Capacidad de respuesta", "incorrectas": ["Optimización de la memoria", "Compartición de recursos", "Inanición"], "explicacion": "El proceso sigue atendiendo al usuario aunque haya tareas largas en marcha."}, {"enunciado": "¿Cuál de estas NO es una ventaja de los hilos según el tema?", "correcta": "Cada hilo tiene memoria aislada, así que nunca hay conflictos", "incorrectas": ["Capacidad de respuesta", "Optimización de la memoria", "Paralelismo real"], "explicacion": "Al contrario: compartir memoria es justo lo que puede causar conflictos."}, {"enunciado": "Has creado un objeto hilo pero todavía no has llamado a start(). ¿En qué estado está?", "correcta": "Nuevo (NEW)", "incorrectas": ["Pudiendo ejecutarse (RUNNABLE)", "Bloqueado", "Terminado"], "explicacion": "Nuevo: está creado, pero aún no ha recibido la orden de empezar."}, {"enunciado": "Un hilo ha terminado su run(). ¿Libera recursos?", "correcta": "No, porque los recursos no son suyos, sino del proceso", "incorrectas": ["Sí, libera toda la memoria que usaba", "Solo si se llama a destroy()", "Sí, pero solo la pila"], "explicacion": "Es una diferencia con los procesos: un proceso terminado libera recursos y un hilo no."}, {"enunciado": "¿Con qué método se consulta en Java el estado de un hilo?", "correcta": "getState()", "incorrectas": ["getStatus()", "isAlive()", "state()"], "explicacion": "getState() devuelve NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING o TERMINATED."}]</script>
+<script>
+const datos = JSON.parse(document.getElementById('datos').textContent);
+const zona = document.getElementById('preguntas');
+const marcador = document.getElementById('marcador');
+const fin = document.getElementById('fin');
+let aciertos = 0, respondidas = 0;
+
+function mezclar(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function pintar() {
+    aciertos = 0; respondidas = 0;
+    zona.innerHTML = '';
+    fin.style.display = 'none';
+    actualizar();
+    mezclar(datos.slice()).forEach((p, n) => {
+        const caja = document.createElement('div');
+        caja.className = 'q';
+        const h = document.createElement('h2');
+        const num = document.createElement('span');
+        num.textContent = (n + 1) + '.';
+        h.append(num, document.createTextNode(p.enunciado));
+        caja.append(h);
+        if (p.codigo) {
+            const pre = document.createElement('pre');
+            pre.textContent = p.codigo;
+            caja.append(pre);
+        }
+        const exp = document.createElement('div');
+        exp.className = 'exp';
+        const opciones = mezclar([{t: p.correcta, ok: true}, ...p.incorrectas.map(t => ({t, ok: false}))]);
+        const botones = [];
+        opciones.forEach(o => {
+            const b = document.createElement('button');
+            b.className = 'op';
+            b.textContent = o.t;
+            b.onclick = () => {
+                botones.forEach(x => {
+                    x.disabled = true;
+                    if (x._ok) x.classList.add('ok');
+                });
+                if (!o.ok) b.classList.add('ko'); else aciertos++;
+                respondidas++;
+                const v = document.createElement('b');
+                v.className = o.ok ? 'ok' : 'ko';
+                v.textContent = o.ok ? '¡Correcto! ' : 'Incorrecto. ';
+                exp.append(v, document.createTextNode(p.explicacion));
+                exp.style.display = 'block';
+                actualizar();
+            };
+            b._ok = o.ok;
+            botones.push(b);
+            caja.append(b);
+        });
+        caja.append(exp);
+        zona.append(caja);
+    });
+}
+
+function actualizar() {
+    marcador.textContent = aciertos + ' / ' + respondidas + ' (de ' + datos.length + ')';
+    if (respondidas === datos.length) {
+        const nota = (aciertos * 10 / datos.length).toFixed(1).replace('.', ',');
+        document.getElementById('nota').textContent =
+            'Has acertado ' + aciertos + ' de ' + datos.length + ' · Nota: ' + nota;
+        fin.style.display = 'block';
+    }
+}
+
+document.getElementById('repetir').onclick = () => { pintar(); window.scrollTo(0, 0); };
+pintar();
+</script>
+</body>
+</html>

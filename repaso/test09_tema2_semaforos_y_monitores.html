@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test 9 · Tema 2 · Semáforos y monitores</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--txt:#1d2330;--sub:#5b6474;--line:#dfe3ea;--acc:#3b5bdb;--ok:#2b8a3e;--okbg:#e6f4ea;--ko:#c92a2a;--kobg:#fdecec;--code:#f1f3f5}
+@media (prefers-color-scheme:dark){:root{--bg:#15181e;--card:#1e222a;--txt:#e6e9ef;--sub:#9aa3b2;--line:#323844;--acc:#7c95f2;--ok:#69db7c;--okbg:#1f3326;--ko:#ff8787;--kobg:#3a2224;--code:#262b34}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 20px 64px}
+a{color:var(--acc)}
+h1{font-size:1.5rem;margin:0 0 4px}
+.sub{color:var(--sub);margin:0 0 24px}
+.barra{position:sticky;top:0;background:var(--bg);padding:10px 0;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);z-index:1}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.q h2{font-size:1rem;margin:0 0 12px;font-weight:600}
+.q h2 span{color:var(--sub);font-weight:500;margin-right:6px}
+pre{background:var(--code);border-radius:8px;padding:12px 14px;overflow-x:auto;font:13.5px/1.45 Consolas,"Cascadia Code",monospace;margin:0 0 12px}
+.op{display:block;width:100%;text-align:left;background:transparent;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;font:inherit;cursor:pointer}
+.op:hover:not(:disabled){border-color:var(--acc)}
+.op:disabled{cursor:default}
+.op.ok{border-color:var(--ok);background:var(--okbg)}
+.op.ko{border-color:var(--ko);background:var(--kobg)}
+.exp{display:none;margin-top:10px;padding:10px 12px;border-left:3px solid var(--acc);color:var(--txt);background:var(--code);border-radius:0 8px 8px 0}
+.exp b.ok{color:var(--ok)} .exp b.ko{color:var(--ko)}
+.fin{display:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center}
+.fin p{font-size:1.2rem;margin:0 0 12px}
+button.btn{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+ul.lista{list-style:none;padding:0}
+ul.lista li{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0}
+ul.lista a{display:block;padding:12px 16px;text-decoration:none;color:var(--txt)}
+ul.lista a:hover{color:var(--acc)}
+ul.lista small{color:var(--sub);float:right}
+</style>
+</head>
+<body>
+<main>
+<p><a href="index.html">← Todos los tests</a></p>
+<h1>Test 9 · Tema 2 · Semáforos y monitores</h1>
+<p class="sub">PSP · 10 preguntas. Las preguntas y las opciones se mezclan cada vez que repites el test.</p>
+<div class="barra"><span>Aciertos: <b id="marcador"></b></span></div>
+<div id="preguntas"></div>
+<div class="fin" id="fin"><p id="nota"></p><button class="btn" id="repetir">Repetir test</button></div>
+</main>
+<script type="application/json" id="datos">[{"enunciado": "¿Qué ventaja tienen los semáforos frente a la espera activa?", "correcta": "El proceso que no puede entrar se duerme sin consumir CPU, y el que sale despierta a uno de los dormidos", "incorrectas": ["Dejan entrar a todos los hilos a la vez", "No necesitan sección crítica", "No hay que llamar a ningún método"], "explicacion": "Así se evita la espera activa."}, {"enunciado": "¿Qué hace acquire() en un semáforo?", "correcta": "Comprueba si se puede entrar en la sección crítica y, si no, duerme al proceso hasta que quede libre", "incorrectas": ["Libera la sección crítica", "Crea un hilo nuevo", "Despierta a todos los procesos dormidos"], "explicacion": "acquire() sirve para entrar y release() para salir."}, {"enunciado": "¿Qué hace release() en un semáforo?", "correcta": "Libera la sección crítica y despierta a un proceso que estaba esperando", "incorrectas": ["Duerme al proceso actual", "Termina el hilo", "Reinicia el semáforo a 0"], "explicacion": "Es la pareja de acquire()."}, {"enunciado": "¿Dónde está la clase Semaphore y qué significa new Semaphore(1)?", "correcta": "En java.util.concurrent; deja entrar a un solo hilo a la vez", "incorrectas": ["En java.lang; espera 1 segundo", "En java.util.concurrent; espera 1 segundo", "En java.io; crea 1 cola"], "explicacion": "El número indica cuántos hilos pueden estar dentro a la vez."}, {"enunciado": "¿Qué tipo de cola suele tener un semáforo para los procesos dormidos?", "correcta": "FIFO", "incorrectas": ["LIFO", "Por prioridad, siempre", "No tiene cola"], "explicacion": "Cada semáforo tiene una cola de procesos esperando, normalmente FIFO."}, {"enunciado": "¿Por qué un monitor es más sencillo que un semáforo?", "correcta": "Porque el programador solo llama al método; con semáforos tiene que controlar él acquire() y release()", "incorrectas": ["Porque no da exclusión mutua", "Porque deja que varios hilos ejecuten sus métodos a la vez", "Porque no hace falta usar hilos"], "explicacion": "Un monitor es un conjunto de métodos atómicos. En Java se usa con synchronized."}, {"enunciado": "Un hilo está ejecutando un método synchronized de un objeto. ¿Qué pueden hacer los demás hilos?", "correcta": "Ninguno puede ejecutar ningún método synchronized de ese objeto hasta que termine", "incorrectas": ["Ejecutar ese mismo método a la vez", "Ejecutar otros métodos synchronized del mismo objeto", "Interrumpirlo para entrar"], "explicacion": "El hilo adquiere el monitor del objeto."}, {"enunciado": "¿Cuándo libera un hilo el monitor de un método synchronized?", "correcta": "Al terminar el método o si lanza una excepción no capturada", "incorrectas": ["Nunca, hay que liberarlo a mano", "Cuando llama a sleep()", "Cuando el main termina"], "explicacion": "No hace falta liberarlo explícitamente, a diferencia de release() en los semáforos."}, {"enunciado": "¿Cuál es el inconveniente de los métodos sincronizados?", "correcta": "Se pierde paralelismo", "incorrectas": ["No funcionan con métodos static", "Producen condiciones de carrera", "Necesitan un semáforo"], "explicacion": "Se bloquea el método entero, aunque solo una parte toque datos compartidos."}, {"enunciado": "¿Qué ventaja tienen las sentencias sincronizadas, synchronized (objeto) { ... }?", "correcta": "Son más versátiles: solo se bloquean las líneas que elige el programador, usando como monitor el objeto entre paréntesis", "incorrectas": ["No necesitan ningún objeto", "Bloquean siempre el objeto que se está ejecutando", "Dejan entrar a dos hilos a la vez"], "explicacion": "Se crea un objeto que solo sirve para dar el monitor y se comparte entre los hilos."}]</script>
+<script>
+const datos = JSON.parse(document.getElementById('datos').textContent);
+const zona = document.getElementById('preguntas');
+const marcador = document.getElementById('marcador');
+const fin = document.getElementById('fin');
+let aciertos = 0, respondidas = 0;
+
+function mezclar(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function pintar() {
+    aciertos = 0; respondidas = 0;
+    zona.innerHTML = '';
+    fin.style.display = 'none';
+    actualizar();
+    mezclar(datos.slice()).forEach((p, n) => {
+        const caja = document.createElement('div');
+        caja.className = 'q';
+        const h = document.createElement('h2');
+        const num = document.createElement('span');
+        num.textContent = (n + 1) + '.';
+        h.append(num, document.createTextNode(p.enunciado));
+        caja.append(h);
+        if (p.codigo) {
+            const pre = document.createElement('pre');
+            pre.textContent = p.codigo;
+            caja.append(pre);
+        }
+        const exp = document.createElement('div');
+        exp.className = 'exp';
+        const opciones = mezclar([{t: p.correcta, ok: true}, ...p.incorrectas.map(t => ({t, ok: false}))]);
+        const botones = [];
+        opciones.forEach(o => {
+            const b = document.createElement('button');
+            b.className = 'op';
+            b.textContent = o.t;
+            b.onclick = () => {
+                botones.forEach(x => {
+                    x.disabled = true;
+                    if (x._ok) x.classList.add('ok');
+                });
+                if (!o.ok) b.classList.add('ko'); else aciertos++;
+                respondidas++;
+                const v = document.createElement('b');
+                v.className = o.ok ? 'ok' : 'ko';
+                v.textContent = o.ok ? '¡Correcto! ' : 'Incorrecto. ';
+                exp.append(v, document.createTextNode(p.explicacion));
+                exp.style.display = 'block';
+                actualizar();
+            };
+            b._ok = o.ok;
+            botones.push(b);
+            caja.append(b);
+        });
+        caja.append(exp);
+        zona.append(caja);
+    });
+}
+
+function actualizar() {
+    marcador.textContent = aciertos + ' / ' + respondidas + ' (de ' + datos.length + ')';
+    if (respondidas === datos.length) {
+        const nota = (aciertos * 10 / datos.length).toFixed(1).replace('.', ',');
+        document.getElementById('nota').textContent =
+            'Has acertado ' + aciertos + ' de ' + datos.length + ' · Nota: ' + nota;
+        fin.style.display = 'block';
+    }
+}
+
+document.getElementById('repetir').onclick = () => { pintar(); window.scrollTo(0, 0); };
+pintar();
+</script>
+</body>
+</html>

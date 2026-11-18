@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test 4 · Tema 1 · Procesos en Java y comunicación</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--txt:#1d2330;--sub:#5b6474;--line:#dfe3ea;--acc:#3b5bdb;--ok:#2b8a3e;--okbg:#e6f4ea;--ko:#c92a2a;--kobg:#fdecec;--code:#f1f3f5}
+@media (prefers-color-scheme:dark){:root{--bg:#15181e;--card:#1e222a;--txt:#e6e9ef;--sub:#9aa3b2;--line:#323844;--acc:#7c95f2;--ok:#69db7c;--okbg:#1f3326;--ko:#ff8787;--kobg:#3a2224;--code:#262b34}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 20px 64px}
+a{color:var(--acc)}
+h1{font-size:1.5rem;margin:0 0 4px}
+.sub{color:var(--sub);margin:0 0 24px}
+.barra{position:sticky;top:0;background:var(--bg);padding:10px 0;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);z-index:1}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.q h2{font-size:1rem;margin:0 0 12px;font-weight:600}
+.q h2 span{color:var(--sub);font-weight:500;margin-right:6px}
+pre{background:var(--code);border-radius:8px;padding:12px 14px;overflow-x:auto;font:13.5px/1.45 Consolas,"Cascadia Code",monospace;margin:0 0 12px}
+.op{display:block;width:100%;text-align:left;background:transparent;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;font:inherit;cursor:pointer}
+.op:hover:not(:disabled){border-color:var(--acc)}
+.op:disabled{cursor:default}
+.op.ok{border-color:var(--ok);background:var(--okbg)}
+.op.ko{border-color:var(--ko);background:var(--kobg)}
+.exp{display:none;margin-top:10px;padding:10px 12px;border-left:3px solid var(--acc);color:var(--txt);background:var(--code);border-radius:0 8px 8px 0}
+.exp b.ok{color:var(--ok)} .exp b.ko{color:var(--ko)}
+.fin{display:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center}
+.fin p{font-size:1.2rem;margin:0 0 12px}
+button.btn{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+ul.lista{list-style:none;padding:0}
+ul.lista li{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0}
+ul.lista a{display:block;padding:12px 16px;text-decoration:none;color:var(--txt)}
+ul.lista a:hover{color:var(--acc)}
+ul.lista small{color:var(--sub);float:right}
+</style>
+</head>
+<body>
+<main>
+<p><a href="index.html">← Todos los tests</a></p>
+<h1>Test 4 · Tema 1 · Procesos en Java y comunicación</h1>
+<p class="sub">PSP · 10 preguntas. Las preguntas y las opciones se mezclan cada vez que repites el test.</p>
+<div class="barra"><span>Aciertos: <b id="marcador"></b></span></div>
+<div id="preguntas"></div>
+<div class="fin" id="fin"><p id="nota"></p><button class="btn" id="repetir">Repetir test</button></div>
+</main>
+<script type="application/json" id="datos">[{"enunciado": "¿Qué clases de Java se usan para lanzar procesos del sistema?", "correcta": "Process y ProcessBuilder", "incorrectas": ["Thread y Runnable", "System y Scanner", "File y FileReader"], "explicacion": "Process representa el proceso lanzado y ProcessBuilder lo configura y lo inicia."}, {"enunciado": "¿Con qué método de ProcessBuilder se inicia el proceso?", "correcta": "start()", "incorrectas": ["run()", "exec()", "create()"], "explicacion": "start() lanza el proceso con los atributos del objeto y devuelve un Process."}, {"enunciado": "En ProcessBuilder, ¿qué indica command()?", "correcta": "El comando que se quiere ejecutar", "incorrectas": ["El directorio de trabajo", "Las variables de entorno", "El PID del proceso"], "explicacion": "command() es el comando, directory() el directorio de trabajo y environment() las variables de entorno."}, {"enunciado": "En ProcessBuilder, ¿para qué sirve directory()?", "correcta": "Para indicar el directorio de trabajo", "incorrectas": ["Para indicar el comando", "Para indicar las variables de entorno", "Para listar los archivos del directorio"], "explicacion": "Es uno de los tres atributos: command, directory y environment."}, {"enunciado": "Además de ProcessBuilder, ¿qué otra forma de obtener un Process aparece en el tema?", "correcta": "Runtime.exec()", "incorrectas": ["new Process()", "System.exec()", "Thread.start()"], "explicacion": "Runtime.exec(String[] com, String[] envp, File dir) también lanza un proceso."}, {"enunciado": "¿De qué depende, en último término, que se cree un proceso desde Java?", "correcta": "Del sistema operativo que hay bajo la JVM", "incorrectas": ["Del compilador de Java", "Del número de hilos del programa", "Del IDE que uses"], "explicacion": "Java comprueba el comando, pero quien crea el proceso es el SO. Por eso pueden surgir errores."}, {"enunciado": "Si el ejecutable no existe o no tienes permisos, ¿qué excepción se lanza normalmente?", "correcta": "IOException", "incorrectas": ["InterruptedException", "NullPointerException", "ArithmeticException"], "explicacion": "En la mayoría de los casos el fallo llega como IOException, que hay que controlar."}, {"enunciado": "¿Qué hace destroy() sobre un proceso hijo?", "correcta": "Lo elimina sin esperar a que termine y libera sus recursos del SO", "incorrectas": ["Espera a que termine", "Lo pausa hasta que se reanude", "Elimina también al padre"], "explicacion": "El padre puede terminar al hijo cuando quiera."}, {"enunciado": "¿Puede el usuario comunicarse directamente con un proceso hijo creado con Process?", "correcta": "No, no tiene interfaz propia: su entrada, su salida y su salida de error se redirigen al padre mediante flujos", "incorrectas": ["Sí, tiene su propia consola", "Solo por la salida de error", "Solo si se lanza con Runtime.exec"], "explicacion": "El padre le manda información y recoge sus resultados a través de los flujos."}, {"enunciado": "En Java, ¿con qué se manda información a la salida de error?", "correcta": "System.err", "incorrectas": ["System.out", "System.in", "System.error"], "explicacion": "System.out escribe en stdout y System.err en stderr."}]</script>
+<script>
+const datos = JSON.parse(document.getElementById('datos').textContent);
+const zona = document.getElementById('preguntas');
+const marcador = document.getElementById('marcador');
+const fin = document.getElementById('fin');
+let aciertos = 0, respondidas = 0;
+
+function mezclar(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function pintar() {
+    aciertos = 0; respondidas = 0;
+    zona.innerHTML = '';
+    fin.style.display = 'none';
+    actualizar();
+    mezclar(datos.slice()).forEach((p, n) => {
+        const caja = document.createElement('div');
+        caja.className = 'q';
+        const h = document.createElement('h2');
+        const num = document.createElement('span');
+        num.textContent = (n + 1) + '.';
+        h.append(num, document.createTextNode(p.enunciado));
+        caja.append(h);
+        if (p.codigo) {
+            const pre = document.createElement('pre');
+            pre.textContent = p.codigo;
+            caja.append(pre);
+        }
+        const exp = document.createElement('div');
+        exp.className = 'exp';
+        const opciones = mezclar([{t: p.correcta, ok: true}, ...p.incorrectas.map(t => ({t, ok: false}))]);
+        const botones = [];
+        opciones.forEach(o => {
+            const b = document.createElement('button');
+            b.className = 'op';
+            b.textContent = o.t;
+            b.onclick = () => {
+                botones.forEach(x => {
+                    x.disabled = true;
+                    if (x._ok) x.classList.add('ok');
+                });
+                if (!o.ok) b.classList.add('ko'); else aciertos++;
+                respondidas++;
+                const v = document.createElement('b');
+                v.className = o.ok ? 'ok' : 'ko';
+                v.textContent = o.ok ? '¡Correcto! ' : 'Incorrecto. ';
+                exp.append(v, document.createTextNode(p.explicacion));
+                exp.style.display = 'block';
+                actualizar();
+            };
+            b._ok = o.ok;
+            botones.push(b);
+            caja.append(b);
+        });
+        caja.append(exp);
+        zona.append(caja);
+    });
+}
+
+function actualizar() {
+    marcador.textContent = aciertos + ' / ' + respondidas + ' (de ' + datos.length + ')';
+    if (respondidas === datos.length) {
+        const nota = (aciertos * 10 / datos.length).toFixed(1).replace('.', ',');
+        document.getElementById('nota').textContent =
+            'Has acertado ' + aciertos + ' de ' + datos.length + ' · Nota: ' + nota;
+        fin.style.display = 'block';
+    }
+}
+
+document.getElementById('repetir').onclick = () => { pintar(); window.scrollTo(0, 0); };
+pintar();
+</script>
+</body>
+</html>
