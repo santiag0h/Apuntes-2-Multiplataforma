@@ -23,3 +23,4 @@ class PokeStoreFigure(models.Model):
     price = fields.Float(string="Precio", required=True)
     stock = fields.Integer(string="Stock", default=0)
     active = fields.Boolean(default=True)
+    tags_ids = fields.Many2many("pokestore.tag", string="etiqueta")

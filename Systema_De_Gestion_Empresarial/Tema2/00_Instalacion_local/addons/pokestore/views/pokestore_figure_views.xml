@@ -25,6 +25,7 @@
                             <field name="name" />
                             <field name="pokemon" />
                             <field name="collection_id" />
+                            <field name="tags_ids" widget="many2many_tags" />
                         </group>
                         <group>
                             <field name="rarity" />
@@ -36,7 +37,24 @@
                 </sheet>
             </form>
         </field>
+
     </record>
+    <record id="pokestore_figure_view_search" model="ir.ui.view">
+        <field name="name" >pokestore.figure.search</field>
+        <field name="model" >pokestore.figure</field>
+    <field name="arch" type="xml">
+        <search string="Buscar figuras">
+            <field name="name" />
+            <field name="pokemon" />
+            <filter name="filter_exclusivas" string="Exclusivas" domain="[('rarity', '=', 'exclusive')]" />
+            <group expand="0" string="Agrupar por colleccion">
+                <filter name="group_collection" string="colleccion" context="{'group_by': 'collection_id'}" />
+            </group>
+        </search>
+    </field>
+
+    </record>
+
     <record id="pokestore_figure_action" model="ir.actions.act_window">
         <field name="name">Figuras</field>
         <field name="res_model">pokestore.figure</field>

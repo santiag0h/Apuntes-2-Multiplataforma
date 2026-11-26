@@ -15,7 +15,7 @@
         <field name="name">pokestore.collection.form</field>
         <field name="model">pokestore.collection</field>
         <field name="arch" type="xml">
-            <form string="Figura">
+            <form string="Coleccion">
                 <sheet>
                     <group>
                         <group>
@@ -29,7 +29,7 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Coleciones">
+                        <page string="Figura">
                         <field name="figure_ids" />
                         </page>
                     </notebook>
